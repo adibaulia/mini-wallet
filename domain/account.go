@@ -14,6 +14,6 @@ type (
 
 	AccountRepository interface {
 		CreateAccount(Account) error
-		GetAccount(string) (Account, error)
+		GetAccount(string) (*Account, error)
 	}
 )

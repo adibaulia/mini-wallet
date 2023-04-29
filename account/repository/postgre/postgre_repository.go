@@ -30,6 +30,14 @@ func (repo *postgreAccountRepo) CreateAccount(account domain.Account) error {
 	}
 	return nil
 }
-func (repo *postgreAccountRepo) GetAccount(string) (domain.Account, error) {
-	return domain.Account{}, nil
+func (repo *postgreAccountRepo) GetAccount(customerXID string) (*domain.Account, error) {
+	// Query the database for the account with the given CustomerXID
+	var account domain.Account
+	err := repo.DB.QueryRow("SELECT id, customer_xid, token FROM accounts WHERE customer_xid = $1", customerXID).
+		Scan(&account.ID, &account.CustomerXID, &account.Token)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query database: %w", err)
+	}
+
+	return &account, nil
 }
