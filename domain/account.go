@@ -9,7 +9,7 @@ type (
 
 	AccountUseCase interface {
 		CreateAccount(string) (string, error)
-		ValidateAccount(string) bool
+		ValidateAccountToken(string) (string, error)
 	}
 
 	AccountRepository interface {
