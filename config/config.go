@@ -11,11 +11,12 @@ import (
 
 type (
 	Configuration struct {
-		Host     string `mapstructure:"host"`
-		Port     string `mapstructure:"port"`
-		Username string `mapstructure:"username"`
-		Password string `mapstructure:"password"`
-		DBName   string `mapstructure:"dbName"`
+		Host        string `mapstructure:"host"`
+		Port        string `mapstructure:"port"`
+		Username    string `mapstructure:"username"`
+		Password    string `mapstructure:"password"`
+		DBName      string `mapstructure:"dbName"`
+		ServicePort string `mapstructure:"servicePort"`
 	}
 	Conn struct {
 		PostgreCon *sql.DB
@@ -24,6 +25,7 @@ type (
 
 var (
 	connection *Conn
+	Conf       *Configuration
 )
 
 func getEnvConfig() *Configuration {
@@ -54,9 +56,9 @@ func GetConnection() *Conn {
 	if connection != nil {
 		return connection
 	}
-	conf := getEnvConfig()
+	Conf = getEnvConfig()
 	connStr := fmt.Sprintf("host=%s port=%v user=%s password=%s dbname=%s sslmode=disable",
-		conf.Host, conf.Port, conf.Username, conf.Password, conf.DBName)
+		Conf.Host, Conf.Port, Conf.Username, Conf.Password, Conf.DBName)
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatalf("error opening postgres connection: %v", err)

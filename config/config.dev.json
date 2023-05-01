@@ -1,0 +1,8 @@
+{
+    "host": "localhost",
+	"port":"27917",
+	"username":"admin",
+	"password":"password",
+	"dbName":"mini-wallet",
+	"servicePort":"8080"
+}
