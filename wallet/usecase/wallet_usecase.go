@@ -123,6 +123,20 @@ func (u *walletUseCase) GetWalletBalance(token string) (*domain.Wallet, error) {
 
 	return wallet, nil
 }
+func (u *walletUseCase) GetWalletTransactions(token string) ([]domain.Transaction, error) {
+	xid, err := u.accountUseCase.ValidateAccountToken(token)
+	if err != nil {
+		log.Printf("error validating account token: %v", err)
+		return nil, err
+	}
+
+	transactions, err := u.walletRepo.GetWalletTransactions(xid)
+	if err != nil {
+		log.Printf("error when getting wallet transactions: %v", err)
+		return nil, err
+	}
+	return transactions, nil
+}
 
 func (u *walletUseCase) DepositMoneyWallet(token string, refID string, amount int64) (*domain.Wallet, error) {
 	xid, err := u.accountUseCase.ValidateAccountToken(token)

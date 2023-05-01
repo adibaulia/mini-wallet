@@ -19,6 +19,7 @@ type (
 		GetWalletBalance(string) (*Wallet, error)
 		DepositMoneyWallet(string, string, int64) (*Wallet, error)
 		WithdrawMoneyWallet(string, string, int64) (*Wallet, error)
+		GetWalletTransactions(string) ([]Transaction, error)
 	}
 
 	WalletRepository interface {
@@ -26,5 +27,6 @@ type (
 		GetWallet(string) (*Wallet, error)
 		UpdateWallet(*Wallet) error
 		UpdateBalance(*Wallet, string, TrxStatus, int64) error
+		GetWalletTransactions(string) ([]Transaction, error)
 	}
 )

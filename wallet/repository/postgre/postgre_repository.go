@@ -91,6 +91,29 @@ func (r *postgreWalletRepo) UpdateBalance(wallet *domain.Wallet, refID string, t
 
 }
 
+func (r *postgreWalletRepo) GetWalletTransactions(ownedBy string) ([]domain.Transaction, error) {
+	rows, err := r.DB.Query("SELECT * FROM transactions WHERE owned_by = $1", ownedBy)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var transactions []domain.Transaction
+	for rows.Next() {
+		var trx domain.Transaction
+		err := rows.Scan(&trx.ID, &trx.OwnedBy, &trx.Status, &trx.WalletID, &trx.Amount, &trx.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
+		transactions = append(transactions, trx)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return transactions, nil
+}
+
 func (r *postgreWalletRepo) InsertTrx(tx *sql.Tx, wallet *domain.Wallet, refID string, trxStatus domain.TrxStatus, amount int64) error {
 	err := r.createTransaction(tx, &domain.Transaction{
 		ID:       refID,

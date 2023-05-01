@@ -29,6 +29,33 @@ func NewWalletHandler(r *gin.Engine, us domain.AccountUseCase, wus domain.Wallet
 	walletRG.PATCH("", handler.disableWallet)
 	walletRG.POST("/deposits", handler.depositWallet)
 	walletRG.PATCH("/withdrawals", handler.withdrawWallet)
+	walletRG.GET("/transactions", handler.getTransaction)
+
+}
+
+func (h *walletHandler) getTransaction(c *gin.Context) {
+	authHeader := c.GetHeader("Authorization")
+
+	if authHeader == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Missing Authorization header"})
+		return
+	}
+	token := strings.TrimPrefix(authHeader, "Token ")
+
+	transactions, err := h.walletUsecase.GetWalletTransactions(token)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, response{
+			Status:  "error",
+			Message: "Error when get wallet transactions",
+		})
+		return
+	}
+	c.JSON(http.StatusCreated, response{
+		Status: "success",
+		Data: map[string]interface{}{
+			"transations": transactions,
+		},
+	})
 
 }
 
