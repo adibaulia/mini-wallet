@@ -21,8 +21,8 @@ func NewAccountRepository(db *sql.DB) domain.AccountRepository {
 func (repo *postgreAccountRepo) CreateAccount(account domain.Account) error {
 	id := uuid.New().String()
 	query := `
-        INSERT INTO accounts (id, customer_xid, token)
-        VALUES ($1, $2, $3)
+        INSERT INTO accounts (id, customer_xid, token, created_at, updated_at)
+        VALUES ($1, $2, $3, NOW(), NOW())
     `
 	_, err := repo.DB.Exec(query, id, account.CustomerXID, account.Token)
 	if err != nil {

@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS transactions (
+    id VARCHAR(255) PRIMARY KEY,
+    owned_by VARCHAR(255) NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    wallet_id VARCHAR(255) NOT NULL,
+    amount BIGINT NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS wallets (
+    id VARCHAR(255) PRIMARY KEY,
+    owned_by VARCHAR(255) NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    enabled_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    balance BIGINT NOT NULL,
+    created_at TIMESTAMP  NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS accounts (
+    id VARCHAR(255) PRIMARY KEY,
+    customer_xid VARCHAR(255) NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL
+);

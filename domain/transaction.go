@@ -1,11 +1,14 @@
 package domain
 
+import "time"
+
 type (
 	Transaction struct {
-		ID          string `json:"id"`
-		OwnedBy     string `json:"owned_by"`
-		Status      Status `json:"status"`
-		By          string `json:"by"`
-		DateCreated string `json:"date_created"`
+		ID        string    `json:"id"`
+		OwnedBy   string    `json:"owned_by"`
+		Status    TrxStatus `json:"status"`
+		WalletID  string    `json:"wallet_id"`
+		Amount    int64     `json:"amount"`
+		CreatedAt time.Time `json:"created_at"`
 	}
 )

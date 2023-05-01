@@ -1,10 +1,11 @@
 package domain
 
-type Status string
+type WalletStatus string
+type TrxStatus string
 
 var (
-	DISABLE  Status = "disabled"
-	ENABLED  Status = "enabled"
-	WITHDRAW Status = "withdraw"
-	DEPOSIT  Status = "deposit"
+	DISABLE  WalletStatus = "disabled"
+	ENABLED  WalletStatus = "enabled"
+	WITHDRAW TrxStatus    = "withdraw"
+	DEPOSIT  TrxStatus    = "deposit"
 )
