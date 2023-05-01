@@ -17,13 +17,14 @@ type (
 		EnableWallet(string) (*Wallet, error)
 		DisableWallet(string) (*Wallet, error)
 		GetWalletBalance(string) (*Wallet, error)
-		DepositMoneyWallet(string, int64) (*Wallet, error)
-		WithdrawMoneyWallet(string, int64) (*Wallet, error)
+		DepositMoneyWallet(string, string, int64) (*Wallet, error)
+		WithdrawMoneyWallet(string, string, int64) (*Wallet, error)
 	}
 
 	WalletRepository interface {
 		CreateWallet(*Wallet) error
 		GetWallet(string) (*Wallet, error)
 		UpdateWallet(*Wallet) error
+		UpdateBalance(*Wallet, string, TrxStatus, int64) error
 	}
 )

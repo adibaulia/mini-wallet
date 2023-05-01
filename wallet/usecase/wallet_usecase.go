@@ -124,7 +124,7 @@ func (u *walletUseCase) GetWalletBalance(token string) (*domain.Wallet, error) {
 	return wallet, nil
 }
 
-func (u *walletUseCase) DepositMoneyWallet(token string, amount int64) (*domain.Wallet, error) {
+func (u *walletUseCase) DepositMoneyWallet(token string, refID string, amount int64) (*domain.Wallet, error) {
 	xid, err := u.accountUseCase.ValidateAccountToken(token)
 	if err != nil {
 		log.Printf("error validating account token: %v", err)
@@ -147,7 +147,7 @@ func (u *walletUseCase) DepositMoneyWallet(token string, amount int64) (*domain.
 
 	wallet.Balance = wallet.Balance + amount
 
-	err = u.walletRepo.UpdateWallet(wallet)
+	err = u.walletRepo.UpdateBalance(wallet, refID, domain.DEPOSIT, amount)
 	if err != nil {
 		log.Printf("error when updating wallet: %v", err)
 		return nil, err
@@ -156,7 +156,7 @@ func (u *walletUseCase) DepositMoneyWallet(token string, amount int64) (*domain.
 	return wallet, nil
 }
 
-func (u *walletUseCase) WithdrawMoneyWallet(token string, amount int64) (*domain.Wallet, error) {
+func (u *walletUseCase) WithdrawMoneyWallet(token string, refID string, amount int64) (*domain.Wallet, error) {
 	xid, err := u.accountUseCase.ValidateAccountToken(token)
 	if err != nil {
 		log.Printf("error validating account token: %v", err)
@@ -182,7 +182,7 @@ func (u *walletUseCase) WithdrawMoneyWallet(token string, amount int64) (*domain
 	}
 	wallet.Balance = wallet.Balance - amount
 
-	err = u.walletRepo.UpdateWallet(wallet)
+	err = u.walletRepo.UpdateBalance(wallet, refID, domain.WITHDRAW, amount)
 	if err != nil {
 		log.Printf("error when updating wallet: %v", err)
 		return nil, err
