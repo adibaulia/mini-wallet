@@ -7,8 +7,8 @@ type (
 		ID          string    `json:"id"`
 		CustomerXID string    `json:"customer_xid"`
 		Token       string    `json:"token"`
-		CreatedAt   time.Time `json:"create_at"`
-		UpdateDate  time.Time `json:"update_at"`
+		CreatedAt   time.Time `json:"created_at"`
+		UpdateDate  time.Time `json:"updated_at"`
 	}
 
 	AccountUseCase interface {

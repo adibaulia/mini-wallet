@@ -115,12 +115,6 @@ func (u *walletUseCase) GetWalletBalance(token string) (*domain.Wallet, error) {
 		return nil, domain.ErrWalletMustEnabled
 	}
 
-	err = u.walletRepo.UpdateWallet(wallet)
-	if err != nil {
-		log.Printf("error when updating wallet: %v", err)
-		return nil, err
-	}
-
 	return wallet, nil
 }
 func (u *walletUseCase) GetWalletTransactions(token string) ([]domain.Transaction, error) {

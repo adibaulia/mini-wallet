@@ -30,7 +30,7 @@ var (
 
 func getEnvConfig() *Configuration {
 
-	envFlag := flag.String("env", "staging", "state the active profile, default staging")
+	envFlag := flag.String("env", "dev", "state the active profile, default staging")
 	flag.Parse()
 
 	env := *envFlag
@@ -63,7 +63,14 @@ func GetConnection() *Conn {
 	if err != nil {
 		log.Fatalf("error opening postgres connection: %v", err)
 	}
-	defer db.Close()
+
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Connected to database!")
+
 	connection = &Conn{
 		PostgreCon: db,
 	}

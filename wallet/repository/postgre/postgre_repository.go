@@ -45,7 +45,7 @@ func (r *postgreWalletRepo) GetWallet(xid string) (*domain.Wallet, error) {
 }
 
 func (r *postgreWalletRepo) UpdateWallet(wallet *domain.Wallet) error {
-	_, err := r.DB.Exec("UPDATE wallets SET owned_by = $1, status = $3, enabled_at = $4, balance = $5, updated_at = NOW() WHERE owned_by = $1",
+	_, err := r.DB.Exec("UPDATE wallets SET owned_by = $1, status = $2, enabled_at = $3, balance = $4, updated_at = NOW() WHERE owned_by = $1",
 		wallet.OwnedBy, wallet.Status, wallet.EnabledAt, wallet.Balance)
 	if err != nil {
 		return fmt.Errorf("failed to update wallet: %w", err)
@@ -55,7 +55,7 @@ func (r *postgreWalletRepo) UpdateWallet(wallet *domain.Wallet) error {
 }
 
 func (r *postgreWalletRepo) updateWalletTx(tx *sql.Tx, wallet *domain.Wallet) error {
-	_, err := tx.Exec("UPDATE wallets SET owned_by = $1, status = $3, enabled_at = $4, balance = $5, updated_at = NOW() WHERE owned_by = $1",
+	_, err := tx.Exec("UPDATE wallets SET owned_by = $1, status = $2, enabled_at = $3, balance = $4, updated_at = NOW() WHERE owned_by = $1",
 		wallet.OwnedBy, wallet.Status, wallet.EnabledAt, wallet.Balance)
 	if err != nil {
 		return fmt.Errorf("failed to update wallet: %w", err)

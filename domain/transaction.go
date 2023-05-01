@@ -9,6 +9,6 @@ type (
 		Status    TrxStatus `json:"status"`
 		WalletID  string    `json:"wallet_id"`
 		Amount    int64     `json:"amount"`
-		CreatedAt time.Time `json:"create_at"`
+		CreatedAt time.Time `json:"created_at"`
 	}
 )

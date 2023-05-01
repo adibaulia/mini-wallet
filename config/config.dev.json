@@ -1,8 +1,8 @@
 {
     "host": "localhost",
-	"port":"27917",
-	"username":"admin",
-	"password":"password",
+	"port":"5432",
+	"username":"postgres",
+	"password":"mysecretpassword",
 	"dbName":"mini-wallet",
-	"servicePort":"8080"
+	"servicePort":"8081"
 }

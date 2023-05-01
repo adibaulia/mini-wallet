@@ -28,7 +28,7 @@ func NewWalletHandler(r *gin.Engine, us domain.AccountUseCase, wus domain.Wallet
 	walletRG.GET("", handler.getWallet)
 	walletRG.PATCH("", handler.disableWallet)
 	walletRG.POST("/deposits", handler.depositWallet)
-	walletRG.PATCH("/withdrawals", handler.withdrawWallet)
+	walletRG.POST("/withdrawals", handler.withdrawWallet)
 	walletRG.GET("/transactions", handler.getTransaction)
 
 }
@@ -84,7 +84,7 @@ func (h *walletHandler) withdrawWallet(c *gin.Context) {
 		if err == domain.ErrWalletMustEnabled || err == domain.ErrWalletNotFound || err == domain.ErrRefIDTransactionAlreadyExists || err == domain.ErrWalletInsufficantBalance {
 			c.JSON(http.StatusBadRequest, response{
 				Status:  "error",
-				Message: domain.ErrWalletAlreadyEnabled.Error(),
+				Message: err.Error(),
 			})
 			return
 		}
@@ -128,7 +128,7 @@ func (h *walletHandler) depositWallet(c *gin.Context) {
 		if err == domain.ErrWalletMustEnabled || err == domain.ErrWalletNotFound || err == domain.ErrRefIDTransactionAlreadyExists {
 			c.JSON(http.StatusBadRequest, response{
 				Status:  "error",
-				Message: domain.ErrWalletAlreadyEnabled.Error(),
+				Message: err.Error(),
 			})
 			return
 		}

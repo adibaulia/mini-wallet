@@ -15,6 +15,7 @@ import (
 func main() {
 	conn := config.GetConnection()
 
+	defer conn.PostgreCon.Close()
 	r := gin.New()
 
 	accountRepo := accRepo.NewAccountRepository(conn.PostgreCon)

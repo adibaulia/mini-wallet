@@ -9,8 +9,8 @@ type (
 		Status     WalletStatus `json:"status"`
 		EnabledAt  time.Time    `json:"enabled_at"`
 		Balance    int64        `json:"balance"`
-		CreatedAt  time.Time    `json:"create_at,omitempty"`
-		UpdateDate time.Time    `json:"update_at,omitempty"`
+		CreatedAt  time.Time    `json:"created_at,omitempty"`
+		UpdateDate time.Time    `json:"updated_at,omitempty"`
 	}
 
 	WalletUseCase interface {
